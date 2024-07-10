@@ -1,21 +1,23 @@
 from fastapi import FastAPI
 from strawberry.fastapi import GraphQLRouter
-import strawberry
-from mongoengine import connect
+from schemas.graphql import schema
+from dependencies import get_db, get_context
 
-# MongoDBへの接続
-connect(db="myeventdb", host="mongodb://mongo:mongo@mongodb:27017/myeventdb", alias="default")
-
-@strawberry.type
-class Query:
-    @strawberry.field
-    def hello(self, name: str = "World") -> str:
-        return f"Hello {name}"
-
-schema = strawberry.Schema(query=Query)
-graphql_app = GraphQLRouter(schema)
+# GraphQLのエンドポイントを設定する
+graphql_app = GraphQLRouter(
+    schema
+    , context_getter=get_context
+    # , graphiql=True
+)
+# graphql_app = GraphQLRouter(schema)
 
 app = FastAPI()
 
-# GraphQLのエンドポイントを追加
+@app.on_event("startup")
+def startup_event():
+    # アプリケーションが起動する時にデータベース接続を初期化
+    print('データベースの接続')
+    get_db()
+
+# GraphQLのルートをアプリケーションに追加
 app.include_router(graphql_app, prefix="/graphql")
