@@ -64,4 +64,3 @@ class Mutation:
         return EventType(id=id)
 
 schema = strawberry.Schema(query=Query, mutation=Mutation)
-# schema = strawberry.Schema(query=Query)
