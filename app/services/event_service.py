@@ -1,11 +1,21 @@
-from models.event import Event
 from datetime import datetime
 from typing import List, Optional
 
-from schemas.types import EventType
+# from schemas.types import EventType
+# from models.event import Event
+from ..schemas.types import EventType
+from ..models.event import Event
+# from app.schemas.types import EventType
+# from app.models.event import Event
 
 class EventService:
-    def create_event(self, title: str, description: Optional[str], date: datetime, location: Optional[str]) -> Event:
+    def create_event(
+        self,
+        title: str,
+        description: Optional[str],
+        date: datetime,
+        location: Optional[str]
+    ) -> Event:
         """
         新しいイベントを作成する。
         """
@@ -33,7 +43,14 @@ class EventService:
         event = Event.objects(id=event_id).first()
         return self.convert_to_event_type(event)
 
-    def update_event(self, event_id: str, title: Optional[str], description: Optional[str], date: Optional[datetime], location: Optional[str]) -> Optional[Event]:
+    def update_event(
+        self,
+        event_id: str,
+        title: Optional[str],
+        description: Optional[str],
+        date: Optional[datetime],
+        location: Optional[str]
+    ) -> Optional[Event]:
         """
         指定されたIDのイベントを更新する。
         """

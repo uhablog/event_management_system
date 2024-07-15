@@ -1,7 +1,9 @@
 import os
 from mongoengine import connect
 
-from services.event_service import EventService
+# from services.event_service import EventService
+from .services.event_service import EventService
+# from app.services.event_service import EventService
 
 # mongodbへの接続を取得する
 def get_db():

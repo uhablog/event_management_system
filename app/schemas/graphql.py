@@ -4,9 +4,9 @@ from datetime import datetime
 from fastapi import Depends
 from typing import List, Optional
 
-from dependencies import get_event_service
-from services.event_service import EventService
-from schemas.types import EventType
+# from schemas.types import EventType
+from ..schemas.types import EventType
+# from app.schemas.types import EventType
 
 @strawberry.type
 class Query:
